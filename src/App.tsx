@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import "./App.css";
 
 const grid = 20;
@@ -9,25 +9,11 @@ function App() {
     y: "a",
   });
   const [endIndex, setEndIndex] = useState({
-    x: "b",
-    y: "b",
+    x: "a",
+    y: "a",
   });
 
-  const initialRender = useRef(true);
-
-  const grids = [];
-  for (let i = 0; i < grid; i++) {
-    for (let j = 0; j < grid; j++) {
-      grids.push(
-        <div
-          draggable={false}
-          id={`${i},${j}`}
-          className="grid-cells"
-          key={`grid${i + j}${j}`}
-        ></div>
-      );
-    }
-  }
+  const [grids, setGrids] = useState<React.ReactNode[]>([]);
 
   const handleMouseDown = (event: React.MouseEvent) => {
     setIsMouseDown(true);
@@ -60,11 +46,6 @@ function App() {
   };
 
   useEffect(() => {
-    if (initialRender.current) {
-      initialRender.current = false;
-      return;
-    }
-
     document.querySelectorAll(".grid-cells").forEach((value: Element) => {
       const [elementx, elementy] = value.id.split(",");
 
@@ -76,6 +57,18 @@ function App() {
     });
   }, [isMouseDown, endIndex]);
 
+  useLayoutEffect(() => {
+    const gridArray = [];
+    for (let i = 0; i < grid; i++) {
+      for (let j = 0; j < grid; j++) {
+        gridArray.push(
+          <div draggable={false} id={`${i},${j}`} className="grid-cells"></div>
+        );
+      }
+    }
+    setGrids(gridArray);
+  }, []);
+
   return (
     <div className="main-body" draggable={false}>
       <div
@@ -84,7 +77,9 @@ function App() {
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseEnter}
       >
-        {grids.map((grid) => grid)}
+        {grids.map((grid, index) => (
+          <React.Fragment key={index}>{grid}</React.Fragment>
+        ))}
       </div>
     </div>
   );
