@@ -70,18 +70,21 @@ function App() {
   }, []);
 
   return (
-    <div className="main-body" draggable={false}>
-      <div
-        className="grid-wrapper"
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
-        onMouseMove={handleMouseEnter}
-      >
-        {grids.map((grid, index) => (
-          <React.Fragment key={index}>{grid}</React.Fragment>
-        ))}
+    <>
+      <h2 className="heading">Selectable Grid</h2>
+      <div className="main-body" draggable={false}>
+        <div
+          className="grid-wrapper"
+          onMouseDown={handleMouseDown}
+          onMouseUp={handleMouseUp}
+          onMouseMove={handleMouseEnter}
+        >
+          {grids.map((grid, index) => (
+            <React.Fragment key={index}>{grid}</React.Fragment>
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
