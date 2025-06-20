@@ -1,0 +1,19 @@
+.grid-wrapper {
+  display: grid;
+  grid-template-columns: repeat(20, 40px);
+}
+
+.grid-wrapper > div {
+  border: 1px solid black;
+  height: 40px;
+  width: 40px;
+  cursor: pointer;
+}
+
+.main-body {
+  display: flex;
+  height: 95vh;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
